@@ -29,7 +29,13 @@ auto Values = SLO::Extract(Cards, &Card::Value);
 Alternatively, it can create "linked members" that store references to their parent object, either by directly invoking `SLO::LinkedMember`, or with `SLO::ExtractLinked`. The members can be edited, then "commited" back to their parent object.
 Extracted members can also be transformed during extraction with `SLO::ExtractTransform`, they can change types during this process.
 
-In a game like Hearts, its important to know how many cards of a given suit a player has, and to ensure plays only play from that suit. A sub-hand could easily be created like this:
+```cpp
+auto ExtractedMembers = SLO::ExtractLinked(Cards, &Card::Value);
+ExtractedMembers = SLO::Operate(ExtractedMembers, &SLO::LinkedMember<Card, int>::Member, SLN::Square<int>);
+SLO::Operate_p(ExtractedMembers, &SLO::LinkedMember<Card, int>::Commit);
+```
+
+In a game like Hearts, its important to know how many cards of a given suit a player has, and to ensure players only play from that suit. A sub-hand could easily be created like this:
 
 ```cpp
 int HeartsSuit = 4;
