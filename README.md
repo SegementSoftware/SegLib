@@ -54,3 +54,11 @@ SLV::Print(SLV::Operate(SLV::ComparativeInclusion(SLV::ConditionalExclusion(SLN:
 
 ## Installation
 SegLib is header only, save for SegLibNumerical.cpp. If you decide to use SegLibNumerical.cpp be sure to include it as an added executable in your build. Otherwise, simply include the desired SegLib[Suite].h file in your project.
+
+## Future Updates
+SegLib is far from finished, but here's the general direction:
+
+* Make SLO functions less painful.
+* Expand upon SLN, at this point it mostly serves as a series of functions to test SLV and SLO with.
+* Expand upon SegLibConcepts to improve compilation error detection.
+* Support more container types, either by refactoring what already exists or with another namespace.
