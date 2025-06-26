@@ -45,7 +45,7 @@ If your game has dynamic card values, objects can also be subject to `SLO::Opera
 SLO::Operate_p(Cards, &Card::Value, 12, SLN::Add<int>);
 ```
 
-The namespace `SLV` works similarly, containing most of the same functions. Although creating copies of std::vectors most C++ programmers unhappy, it allows for SegLib functions to be piped into each other, creating cursed ways pratice 8 times tables.
+The namespace `SLV` works similarly, containing most of the same functions. Although creating copies of std::vectors most C++ programmers unhappy, it allows for SegLib functions to be piped into each other, creating cursed ways to pratice 8 times tables.
 Experience the weird one-liners of Python, in the comfort of your own C++: 
 
 ```cpp
@@ -53,7 +53,7 @@ SLV::Print(SLV::Operate(SLV::ComparativeInclusion(SLV::ConditionalExclusion(SLN:
 ```
 
 ## Installation
-SegLib is header only, save for SegLibNumerical.cpp. If you decide to use SegLibNumerical.cpp be sure to include it as an added executable in your build. Otherwise, simply include the desired SegLib[Suite].h file in your project.
+SegLib is header only, save for SegLibNumerical.cpp. If you decide to use SegLibNumerical.cpp be sure to include it as an added executable in your build. Otherwise, simply include the desired SegLib[module].h file in your project.
 
 ## Future Updates
 SegLib is far from finished, but here's the general direction:
