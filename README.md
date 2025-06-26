@@ -51,7 +51,7 @@ If your game has dynamic card values, objects can also be subject to `SLO::Opera
 SLO::Operate_p(Cards, &Card::Value, 12, SLN::Add<int>);
 ```
 
-The namespace `SLV` works similarly, containing most of the same functions. Although creating copies of std::vectors most C++ programmers unhappy, it allows for SegLib functions to be piped into each other, creating cursed ways to pratice 8 times tables.
+The namespace `SLV` works similarly, containing most of the same functions. Although creating copies of std::vectors makes most C++ programmers unhappy, it allows for SegLib functions to be piped into each other, creating cursed ways to pratice 8 times tables.
 Experience the weird one-liners of Python, in the comfort of your own C++: 
 
 ```cpp
