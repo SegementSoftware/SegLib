@@ -814,58 +814,6 @@ VECTOR DISTRIBUTION FUNCTIONS
 ==================================================================================================================================================================================
 */
 
-    template<typename ClassType>
-    std::vector<std::vector<ClassType>>Distribute(const std::vector<ClassType>& ObjectVector, size_t Distributions, bool ForceEqualDistribution) {
-        
-        std::vector<std::vector<ClassType>> ReturnVector;
-        ReturnVector.reserve(Distributions);
-
-        if (Distributions <= 1) {
-            ReturnVector.emplace_back(ObjectVector);
-            return ReturnVector;
-        }
-
-        size_t Indices = ObjectVector.size() / Distributions;
-        size_t Index = 0;
-
-        for (size_t i = 0; i < Distributions; i++) {
-
-            std::vector<ClassType> CurrentDistribution;
-            CurrentDistribution.reserve(Indices);
-            
-            for (size_t x = 0; x < Indices; x++) {
-
-                CurrentDistribution.emplace_back(ObjectVector[Index]);
-                Index++;
-
-            }
-
-            ReturnVector.emplace_back(CurrentDistribution);
-
-        }
-
-        if (ForceEqualDistribution) {
-            return ReturnVector;
-        }
-
-        size_t Remainder = ObjectVector.size() % Distributions;
-
-        for (size_t i = 0; i < Remainder; i++) {
-
-            ReturnVector[i].push_back(ObjectVector[Index]);
-            Index++;
-
-        }
-
-        return ReturnVector;
-
-    }
-
-    template<typename ClassType>
-    std::vector<std::vector<ClassType>>Distribute(const std::vector<ClassType>& ObjectVector, size_t Distributions) {
-        return Distribute(ObjectVector, Distributions, false);
-    }
-
     template<typename ClassType, typename MemberType>
     requires HasAccessibleMember<ClassType, MemberType>
     std::vector<std::vector<MemberType>>DistributeMember(const std::vector<ClassType>& ObjectVector, MemberType ClassType::*Member, size_t Distributions, bool ForceEqualDistribution) {

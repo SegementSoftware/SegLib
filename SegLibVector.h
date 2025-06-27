@@ -240,6 +240,14 @@ QUERY FUNCTIONS
 ==================================================================================================================================================================================
 */
 
+    /**
+     * @brief Checks if a vector contains an instance of a given value.
+     *
+     * @tparam T Any type with an equality (operator==) definition.
+     * @param Vector A constant reference to the source vector.
+     * @param Element A constant reference to the value to be checked.
+     * @return True if the vector does contain the element, otherwise false.
+     */
     template <EqualityCompatible T>
     bool ContainsElement(const std::vector<T>& Vector, const T& Element) {
         
@@ -253,6 +261,14 @@ QUERY FUNCTIONS
 
     }
 
+    /**
+     * @brief Finds the index of a given element within a vector.
+     *
+     * @tparam T Any type with an equality (operator==) definition.
+     * @param Vector A constant reference to the source vector.
+     * @param Element A constant reference to the value to be checked.
+     * @return The index of the element, otherwise -1.
+     */
     template <EqualityCompatible T>
     int FindElement(const std::vector<T>& Vector, const T& Element) {
 
@@ -266,10 +282,18 @@ QUERY FUNCTIONS
         
     }
 
+    /**
+     * @brief Finds the indices of a given element within a vector.
+     *
+     * @tparam T Any type with an equality (operator==) definition.
+     * @param Vector A constant reference to the source vector.
+     * @param Element A constant reference to the value to be checked.
+     * @return A vector containing all indices that are equal to the given element.
+     */
     template <EqualityCompatible T>
     std::vector<int> FindAllElement(const std::vector<T>& Vector, const T& Element) {
 
-        std::vector<int> Positions;
+        std::vector<int> Positions = {};
 
         for (int i = 0; i < Vector.size(); i++) {
             if (Vector[i] == Element) {
@@ -281,6 +305,14 @@ QUERY FUNCTIONS
         
     }
 
+    /**
+     * @brief Counts the instances of a given element within a vector.
+     *
+     * @tparam T Any type with an equality (operator==) definition.
+     * @param Vector A constant reference to the source vector.
+     * @param Element A constant reference to the value to be checked.
+     * @return An integer equal to the number of times a given element appears within a vector.
+     */
     template <EqualityCompatible T>
     int CountElement(const std::vector<T>& Vector, const T& Element) {
 
@@ -335,6 +367,18 @@ DELETION FUNCTIONS
 
     }
 
+
+    /**
+     * @brief Edits a vector to only include elements ConditionalFunc evaluates as true.
+     * 
+     *
+     * @tparam T Any type compatible with ConditionalFunc.
+     * @tparam Condition Any function that returns a boolean.
+     * @param Vector A mutable reference to the vector that the conditional tests will be performed on.
+     * @param ConditionalFunc The function that will establish the predicate for an element to be included.
+     * @return The number of elements removed from Vector.
+     * @note ConditionalFunc must return true for an element from Vector remain within the vector.
+     */
     template <typename T, typename Condition>
     size_t ConditionalInclusion_p(std::vector<T>& Vector, Condition ConditionalFunc) {
 
@@ -389,6 +433,18 @@ DELETION FUNCTIONS
 
     }
 
+
+    /**
+     * @brief Edits a vector to only include elements that ConditionalFunc evaluates as false.
+     * 
+     *
+     * @tparam T Any type compatible with ConditionalFunc.
+     * @tparam Condition Any function that returns a boolean.
+     * @param Vector A mutable reference to the vector that the conditional tests will be performed on.
+     * @param ConditionalFunc The function that will establish the predicate for an element to be excluded.
+     * @return  The number of elements removed from Vector.
+     * @note ConditionalFunc must return false for an element from Vector to remain within the vector.
+     */
     template <typename T, typename Condition>
     size_t ConditionalExclusion_p(std::vector<T>& Vector, Condition ConditionalFunc) {
 
@@ -442,6 +498,7 @@ DELETION FUNCTIONS
         return ReturnVector;
 
     }
+
 
     template <typename T, typename Comparison>
     size_t ComparativeInclusion_p(std::vector<T>& Vector, const T& CompVar, Comparison ComparativeFunc) {
@@ -701,6 +758,67 @@ TRANSFORMATIONAL FUNCTIONS
 
         return ReturnVector;
 
+    }
+
+/*
+==================================================================================================================================================================================
+VECTOR DISTRIBUTION FUNCTIONS
+
+    Functions that accomodate vectors
+
+==================================================================================================================================================================================
+*/
+
+    template<typename T>
+    std::vector<std::vector<T>>Distribute(const std::vector<T>& Vector, size_t Distributions, bool ForceEqualDistribution) {
+        
+        std::vector<std::vector<T>> ReturnVector;
+        ReturnVector.reserve(Distributions);
+
+        if (Distributions <= 1) {
+            ReturnVector.emplace_back(Vector);
+            return ReturnVector;
+        }
+
+        size_t Indices = Vector.size() / Distributions;
+        size_t Index = 0;
+
+        for (size_t i = 0; i < Distributions; i++) {
+
+            std::vector<T> CurrentDistribution;
+            CurrentDistribution.reserve(Indices);
+            
+            for (size_t x = 0; x < Indices; x++) {
+
+                CurrentDistribution.emplace_back(Vector[Index]);
+                Index++;
+
+            }
+
+            ReturnVector.emplace_back(CurrentDistribution);
+
+        }
+
+        if (ForceEqualDistribution) {
+            return ReturnVector;
+        }
+
+        size_t Remainder = Vector.size() % Distributions;
+
+        for (size_t i = 0; i < Remainder; i++) {
+
+            ReturnVector[i].push_back(Vector[Index]);
+            Index++;
+
+        }
+
+        return ReturnVector;
+
+    }
+
+    template<typename T>
+    std::vector<std::vector<T>>Distribute(const std::vector<T>& Vector, size_t Distributions) {
+        return Distribute(Vector, Distributions, false);
     }
 
 

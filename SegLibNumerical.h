@@ -258,6 +258,54 @@ OPERATIVE FUNCTIONS
 
 /*
 ==================================================================================================================================================================================
+EVALUATIVE FUNCTIONS
+
+    Functions that evaluate nummbers.
+
+==================================================================================================================================================================================
+*/
+
+    template <IsSimpleNumericalContainer Container>
+    float Average(const Container& NumericalContainer) {
+
+        using NumericalType = typename Container::value_type;
+
+        float Sum = 0;
+        size_t Iterator = 0;
+        
+        for (const NumericalType Element : NumericalContainer) {
+            Sum += Element;
+            Iterator++;
+        }
+
+        if (Iterator == 0) return 0;
+
+        return Sum / Iterator;
+
+    }
+
+    template <IsSimpleNumericalContainer Container>
+    typename Container::value_type AverageType(const Container& NumericalContainer) {
+
+        using NumericalType = typename Container::value_type;
+
+        NumericalType Sum = 0;
+        size_t Iterator = 0;
+        
+        for (const NumericalType Element : NumericalContainer) {
+            Sum += Element;
+            Iterator++;
+        }
+
+        if (Iterator == 0) return 0;
+
+        return Sum / Iterator;
+
+    }
+
+
+/*
+==================================================================================================================================================================================
 GENERATIVE FUNCTIONS
 
     Functions that produce numbers.

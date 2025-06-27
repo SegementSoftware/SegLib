@@ -65,3 +65,19 @@ template<typename ClassType, typename MemberType>
 concept HasAccessibleMember = 
     std::is_class_v<ClassType> &&
     std::is_member_object_pointer_v<MemberType ClassType::*>;
+
+template<typename T>
+concept HasSizeFunc = requires(T container, size_t index) {
+    {container.size()} -> std::convertible_to<size_t>;
+};
+
+template<typename T>
+concept HasSubscript = requires(T container, size_t index) {
+    {container[index]};
+};
+
+template<typename T>
+concept IsSimpleNumericalContainer = 
+    HasSubscript<T> &&
+    requires {typename T::value_type;} &&
+    Numerical<typename T::value_type>;
