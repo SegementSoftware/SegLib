@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <limits>
 #include <vector>
+#include <iterator>
 
 #include <cstdlib>
 
@@ -233,34 +234,12 @@ OPERATIVE FUNCTIONS
 ==================================================================================================================================================================================
 */
 
-    /**
-     * @brief 
-     *
-     */
-    template <Numerical T>
-    T Add(T Value1, T Value2) {
-
-        return Value1 + Value2;
-
-    }
-
-    /**
-     * @brief 
-     *
-     */
-    template <Numerical T>
-    T Square(T Value) {
-
-        return Value * Value;
-
-    }
-
 
 /*
 ==================================================================================================================================================================================
-EVALUATIVE FUNCTIONS
+LIST ANALYSIS FUNCTIONS
 
-    Functions that evaluate nummbers.
+    Functions that analyse lists of numbers
 
 ==================================================================================================================================================================================
 */
@@ -300,6 +279,48 @@ EVALUATIVE FUNCTIONS
         if (Iterator == 0) return 0;
 
         return Sum / Iterator;
+
+    }
+
+    inline int FailureValueLowestCost = 0;
+
+    template <IsSimpleNumericalContainer Container>
+    typename Container::value_type LowestClosest(const Container& NumericalContainer, const typename Container::value_type& TargetValue, int ReturnOnFailure) {
+
+        if (std::begin(NumericalContainer) == std::end(NumericalContainer)) {
+            return FailureValueLowestCost;
+        } 
+
+        using NumericalType = typename Container::value_type;
+
+        NumericalType LowestElement = std::numeric_limits<NumericalType>::lowest();
+        bool Identified = false;
+
+        for (const NumericalType& Element : NumericalContainer) {
+
+            if (Element < TargetValue && Element > LowestElement) {
+                LowestElement = Element;
+                Identified = true;
+            }
+
+        }
+
+        if (Identified) {
+            return LowestElement;
+        } else {
+            if (ReturnOnFailure == 1) {
+                return *std::max_element(std::begin(NumericalContainer), std::end(NumericalContainer));
+            } else {
+                return *std::min_element(std::begin(NumericalContainer), std::end(NumericalContainer));
+            }
+        }
+
+    }
+
+    template <IsSimpleNumericalContainer Container>
+    typename Container::value_type LowestClosest(const Container& NumericalContainer, const typename Container::value_type& TargetValue) {
+
+        return LowestClosest(NumericalContainer, TargetValue, 1);
 
     }
 
